@@ -22,23 +22,6 @@ class MyApp extends StatelessWidget {
 class NewsFeedPage extends StatelessWidget {
   NewsFeedPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('News Feed'),
-        backgroundColor: Colors.blue,
-        elevation: 8.0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: isPortrait ? _buildVerticalLayout() : _buildHorizontalLayout(),
-      ),
-    );
-  }
-
   final List<String> thumbnailUrls = [
     'https://placekitten.com/150/150',
     'https://placekitten.com/151/151',
@@ -52,6 +35,26 @@ class NewsFeedPage extends StatelessWidget {
     'https://placekitten.com/159/159',
   ];
 
+  @override
+  Widget build(BuildContext context) {
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'News Feed',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue,
+        elevation: 8.0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: isPortrait ? _buildVerticalLayout() : _buildHorizontalLayout(),
+      ),
+    );
+  }
+
   Widget _buildVerticalLayout() {
     return ListView.builder(
       itemCount: thumbnailUrls.length,
@@ -59,12 +62,13 @@ class NewsFeedPage extends StatelessWidget {
         return Card(
           elevation: 4.0,
           margin: const EdgeInsets.all(8.0),
-          child: SizedBox(
+          child: Container(
             height: 200,
-            child: Center(
-              child: Image.network(
-                thumbnailUrls[index % thumbnailUrls.length],
-                fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image:
+                    NetworkImage(thumbnailUrls[index % thumbnailUrls.length]),
+                fit: BoxFit.contain,
               ),
             ),
           ),
@@ -84,13 +88,13 @@ class NewsFeedPage extends StatelessWidget {
         return Card(
           elevation: 4.0,
           margin: const EdgeInsets.all(8.0),
-          child: SizedBox(
+          child: Container(
             height: 300,
-            child: Center(
-              child: Image.network(
-                thumbnailUrls[
-                    index % thumbnailUrls.length], // Use different URLs
-                fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image:
+                    NetworkImage(thumbnailUrls[index % thumbnailUrls.length]),
+                fit: BoxFit.contain,
               ),
             ),
           ),
